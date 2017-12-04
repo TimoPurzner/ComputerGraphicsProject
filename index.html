@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>CGProject</title>
+		<script type='text/javascript' src='./main.js'></script>
+		</head>
+	<body onload='initWebGL()'>
+		<canvas id='canvas' width='800' height='600'>
+			Kein HTML5? Kein CGProjekt
+		</cancas>
+
+
+
+		<script type='glsl' id='standard-vs'>
+			void main(){
+				gl_Position = vec4(0.0, 0.0, 0.0, 1);
+				gl_PointSize= 10.0;
+			}
+			
+		</script>
+		<script type='glsl' id='standard-fs'>
+			void main(){
+				gl_FragColor = vec4(1.0, 0.0, 0.0, 1);
+			}
+			
+		</script>
+		
+	<body>
+</html>
