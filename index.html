@@ -7,21 +7,21 @@
     <script type="text/javascript" src="libs/stats.min.js"></script>
     <script type="text/javascript" src="libs/three.min.js"></script>
     <script type="text/javascript" src="libs/webgl-debug.js"></script>
-    <script type='text/javascript' src='./main.js'></script>
+    <script type="text/javascript" src="main.js"></script>
   </head>
-  <body onload='initWebGL()'>
-    <canvas id='canvas' width='800' height='600'>
+  <body onload="initWebGL()">
+    <canvas id="canvas" width="800" height="600">
       Kein HTML5? Kein CGProjekt
     </canvas>
 
-    <script type='glsl' id='standard-vs'>
+    <script type="glsl" id="standard-vs">
       void main(){
         gl_Position = vec4(0.0, 0.0, 0.0, 1);
         gl_PointSize= 10.0;
       }
 
     </script>
-    <script type='glsl' id='standard-fs'>
+    <script type="glsl" id="standard-fs">
       void main(){
         gl_FragColor = vec4(1.0, 0.0, 0.0, 1);
       }
