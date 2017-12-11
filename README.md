@@ -17,7 +17,7 @@ Made with :heartbeat:
 # Tasks
 (:heavy_check_mark: | :grey_question:)
 * Crytek Sponza laden
- * Rendern :grey_question:
+  * Rendern :grey_question:
 * G-Buffer: Multiple-Render-Targets
   * Aufsetzen
   * Normal, Position, Material reinschreiben
