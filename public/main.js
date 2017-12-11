@@ -25,12 +25,10 @@ function initWebGL(){
 	gl.useProgram(program);
 
 	gl.drawArrays(gl.POINT,0,1);
-
-
 }
 
 function initShader(gl, source_vs, source_frag){
-	
+
 	//Speicher  holen
 	var shader_vs = gl.createShader(gl.VERTEX_SHADER);
 	var shader_frag = gl.createShader(gl.FRAGMENT_SHADER);

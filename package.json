@@ -1,0 +1,15 @@
+{
+  "name": "cg-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ZeroSoulEater/ComputerGraphicsProject.git",
+  "author": "David Schwarzmann <dev@dschwarz.codes>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
