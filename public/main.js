@@ -1,68 +1,50 @@
-function initWebGL(){
-	console.info('Startet init WebGL2....')
-	var canvas = document.getElementById("canvas");
-	try {
-		gl = canvas.getContext("webgl2");
-		console.log('WebGL gestartet');
-	} catch (e) {}
-	if (!gl) {
-		alert("Could not initialize WebGL");
-		return;
-	}
+$(document).ready(function() {
+  var scene = new THREE.Scene();
+  var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-	//laden der shaders
-	var vs=document.getElementById('standard-vs').innerHTML;
-	var fs=document.getElementById('standard-fs').innerHTML;
+  var renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
 
-	var program = initShader(gl, vs, fs);
-
-	// Error handling
-	if(program===undefined){
-		console.error('Fehler in initWebGL: program ist undefined');
-		return;
-	}
-
-	gl.useProgram(program);
-
-	gl.drawArrays(gl.POINT,0,1);
-}
-
-function initShader(gl, source_vs, source_frag){
-
-	//Speicher  holen
-	var shader_vs = gl.createShader(gl.VERTEX_SHADER);
-	var shader_frag = gl.createShader(gl.FRAGMENT_SHADER);
-
-	//In den Speicher tun!
-	gl.shaderSource(shader_vs, source_vs);
-	gl.shaderSource(shader_frag, source_frag);
-
-	gl.compileShader(shader_vs);
-	gl.compileShader(shader_frag);
+  var loader = new THREE.OBJLoader2();
 
 
-	//Error handling
-	if(!gl.getShaderParameter(shader_vs, gl.COMPILE_STATUS)){
-		console.error('Fehler im Vertex Shader: '+ gl.getShaderInfoLog(shader_vs))
-	}
-	if(!gl.getShaderParameter(shader_frag, gl.COMPILE_STATUS)){
-		console.error('Fehler im Fragment Shader: '+ gl.getShaderInfoLog(shader_frag))
-	}
+  function animate() {
+    requestAnimationFrame( animate );
+    renderer.render( scene, camera );
 
-	//Create shader program
-	var program = gl.createProgram();
-	gl.attachShader(program, shader_vs);
-	gl.attachShader(program, shader_frag);
 
-	//Link to program erstellen
-	gl.linkProgram(program);
-	//Error handling
-	var success = gl.getProgramParameter(program, gl.LINK_STATUS);
-    if (success) {
-      return program;
-    }else{
-    	console.error(gl.getProgramInfoLog(program));
-    	gl.deleteProgram(program);
-    	return undefined;
-    }
-}
+    renderer.render(scene, camera);
+  }
+
+
+  loader.load('/models/sponza.obj', (event) => {
+    console.log(event.detail.loaderRootNode);
+    scene.add(event.detail.loaderRootNode);
+    loader.setMaterials([new THREE.Material({color: 0xa5ecc4})]);
+
+    animate();
+  }, null, null, null, false);
+
+
+
+/*
+  var geometry = new THREE.BoxGeometry( 1, 2, 1 );
+  var material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  var cube = new THREE.Mesh( geometry, material );
+  scene.add( cube );
+
+  camera.position.z = 5;
+
+  function animate() {
+    requestAnimationFrame( animate );
+    renderer.render( scene, camera );
+
+    cube.rotation.x += 0.1;
+    cube.rotation.y += 0.1;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();*/
+});
