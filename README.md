@@ -23,8 +23,8 @@ Made with :heartbeat:
   * Normal, Position, Material reinschreiben
 * Resolve-Pass
 * Effekte
- * Angler-Fisch Lichtquelle
- * Paar bewegende Lichtquellen
+  * Angler-Fisch Lichtquelle
+  * Paar bewegende Lichtquellen
 * Auswertung:
- * Vgl. zwischen Forward-Shading und Deferred Shading
- * Ab wann lohnt sich bei uns Deferred Shading (ab wieviel Lichtquellen)
+  * Vgl. zwischen Forward-Shading und Deferred Shading
+  * Ab wann lohnt sich bei uns Deferred Shading (ab wieviel Lichtquellen)
