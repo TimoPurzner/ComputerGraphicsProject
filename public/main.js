@@ -9,13 +9,14 @@ function getRandomColor() {
 
 function animate() {
   requestAnimationFrame( animate );
-  //camera.position.z -= 1;
+  plight.position.z -= 1;
   renderer.render( scene, camera );
 }
 
 var scene;
 var stats;
-var light = new THREE.AmbientLight( 0x404040 , 3); // soft white light
+var light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+var plight = new THREE.PointLight( 0xff0000, 10, 100 );
 var camera;
 var renderer;
 var controls;
@@ -78,7 +79,7 @@ var models = {
 var textures = {
   _texture_names: [
     {mat_name: 'vase_round', tex_name: 'vase_round_'},
-    {mat_name: 'vase_hanging', tex_name: 'vase_round_'},
+    {mat_name: 'vase_hanging', tex_name: 'vase_hanging_'},
     {mat_name: 'vase', tex_name: 'vase_'},
     {mat_name: 'chain', tex_name: 'chain_texture_'},
     {mat_name: 'leaf', tex_name: 'sponza_thorn_'},
@@ -91,7 +92,7 @@ var textures = {
 
     // ???
     {mat_name: 'Material__47', tex_name: 'sponza_details_'},
-    {mat_name: '16___Default', tex_name: 'vase_plant_'},
+    {mat_name: '16___Default', tex_name: 'sponza_fabric_'},
     {mat_name: 'Material__57', tex_name: 'vase_plant_'},
 
     // Building
@@ -110,7 +111,7 @@ var textures = {
     {mat_name: 'fabric_g', tex_name: 'sponza_curtain_'},
     // Fabric
     {mat_name: 'fabric_a', tex_name: 'sponza_fabric_'},
-//    {mat_name: 'fabric_b', tex_name: 'sponza_fabric_blue_'},
+    //    {mat_name: 'fabric_b', tex_name: 'sponza_fabric_blue_'},
     {mat_name: 'fabric_e', tex_name: 'sponza_fabric_green_'},
     {mat_name: 'flagpole', tex_name: 'sponza_flagpole_'},
 
@@ -127,7 +128,6 @@ var textures = {
       materials.addMaterial(mat);
       console.log(mat);
     });
-    console.log('DONE');
 
     this.setLoaded();
     materials.setLoaded();
@@ -154,6 +154,13 @@ var textures = {
       material.normalMap = texture;
     }, null, null);
 
+    material.alphaMap = loader.load(`/textures/${base_name}mask.tga`, (texture) => {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      material.alphaMap = texture;
+      material.transparent = true;
+    }, null, null);
+
     material.side = THREE.DoubleSide;
 
     return material;
@@ -172,9 +179,15 @@ function apply_textures() {
   if(!models._loaded || !textures._loaded || !materials._loaded) {
     window.setTimeout(apply_textures, interval);
   } else {
-    console.log('Applying textures to model');
     models._d.forEach((object) => {
       console.log(object);
+
+      object.receiveShadow = true;
+
+      light.castShadow = true;
+      plight.position.x = 0;
+      plight.position.y = 20;
+      plight.position.z = 0;
 
       object.position.x = 0;
       object.position.y = 0;
@@ -216,6 +229,7 @@ $(document).ready(function() {
   camera.position.set(0, 1000, 0);
 
   scene.add(light);
+  scene.add(plight);
   materials._d['defaultMaterial'] = new THREE.MeshBasicMaterial({color: new THREE.Color(getRandomColor()), wireframe: true});
   models.attach(apply_textures);
   textures.load();
