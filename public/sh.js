@@ -1,12 +1,22 @@
 function animate() {
 	requestAnimationFrame(animate);
-  // plights.forEach((o) => {
-  // 	o.position.x += 10;
-  //   if( o.position.x === 1000) {
-  //     o.position.x = -1000;
-  //   }
-  // });
-	//renderer.render(scene, camera);
+  plights.forEach((o) => {
+    let delta = clock.getDelta();
+    let time = Date.now() * 0.0005;
+		if( o ) o.rotation.y -= 0.5 * delta;
+		o.position.x = Math.sin( time * 0.7 ) * 30;
+		//o.position.y = Math.cos( time * 0.5 ) * 40;
+
+		//y bouncing up&down:
+		if (o.position.y >= o.position.maxY){
+
+		} elseif (o.position.y <= o.position.minY){
+
+		}
+
+		o.position.z = Math.cos( time * 0.3 ) * 30;
+  });
+	renderer.render(scene, camera);
 }
 
 // Dynamic object
@@ -249,11 +259,9 @@ function apply_textures() {
 		models._d.forEach((object) => {
 			console.log(object);
 			object.traverse((child) => {
-        console.log('C')
 				if (child instanceof THREE.Mesh) {
           child.castShadow = true;
 					child.receiveShadow = true;
-          console.log('M', child)
 				}
 			});
 
@@ -271,7 +279,7 @@ function apply_textures() {
 
 			scene.add(object);
 
-      renderer.render(scene, camera, render_target);
+      //renderer.render(scene, camera, render_target);
 
 			animate();
 		});

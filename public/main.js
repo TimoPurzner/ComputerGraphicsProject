@@ -17,6 +17,8 @@ let ui;
 
 let l_shaders;
 
+let clock = new THREE.Clock();
+
 var UIParameters = function() {
   this.light_count = 3;
 };
@@ -39,15 +41,27 @@ function redraw_lights(count) {
     plights = [];
   }
 
+
+
   for(let i = 0; i < count; i++) {
-    plights.push(new THREE.PointLight(getRandomColor(), 0.8, 0, 2));
+    let c = getRandomColor();
+    let l = new THREE.PointLight(c, 0.2, 0, 2)
+    let s = new THREE.SphereGeometry( 1, 16, 8 );
+    l.add( new THREE.Mesh( s, new THREE.MeshBasicMaterial( { color: c } ) ) );
+    plights.push(l);
   }
 
   plights.forEach((o) => {
       o.position.x = Math.random() * 2000 - 1000;
-      o.position.y = Math.random() * 500;
+      o.position.y = Math.random() * 250;
       o.position.z = Math.random() * 1000 - 500;
       o.castShadow = true;
+
+      //adding moving direction
+      o.position.minY = o.position.y - 100;
+      o.position.maxY = o.position.y + 100;
+      o.position.movingToMaxY = 1;
+
       scene.add(o);
   });
 
