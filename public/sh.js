@@ -5,14 +5,14 @@ function animate() {
     let time = Date.now() * 0.0005;
 		if( o ) o.rotation.y -= 0.5 * delta;
 		o.position.x = Math.sin( time * 0.7 ) * 30;
-		//o.position.y = Math.cos( time * 0.5 ) * 40;
+		o.position.y = Math.cos( time * 0.5 ) * 40;
 
 		//y bouncing up&down:
-		if (o.position.y >= o.position.maxY){
+		/*if (o.position.y >= o.position.maxY){
 
 		} elseif (o.position.y <= o.position.minY){
 
-		}
+		}*/
 
 		o.position.z = Math.cos( time * 0.3 ) * 30;
   });
